@@ -1,0 +1,35 @@
+\chapter*{Introduction}
+\addcontentsline{toc}{chapter}{Introduction}
+
+
+
+    % \begin{lstlisting}[style=latexFrameTB, caption={Example of Sleek Template packages usage.}, gobble=8]
+    %     \usepackage[english]{babel}
+    %     \usepackage[noheader]{packages/sleek}
+    %     \usepackage{packages/sleek-title}
+    % \end{lstlisting}
+
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\textwidth]{resources/png/instruction_overhead.png}
+    \noskipcaption{Percent overhead in instructions compared to baseline configuration}
+    \label{fig:inst}
+\end{figure}
+
+
+\begin{lstlisting}
+void my_buffer_overflow(char *buffer)
+{
+    buffer[8] = 5;   
+}
+
+int main()
+{
+    char buffer[8];
+    my_buffer_overflow(&buffer);
+}
+\end{lstlisting}
+
+
+

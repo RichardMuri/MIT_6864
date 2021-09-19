@@ -1,0 +1,69 @@
+\documentclass[a4paper, 12pt]{report}
+
+%%%%%%%%%%%%
+% Packages %
+%%%%%%%%%%%%
+
+\usepackage[english]{babel}
+\usepackage[noheader]{packages/sleek}
+\usepackage{packages/sleek-title}
+\usepackage{packages/sleek-theorems}
+\usepackage{packages/sleek-listings}
+\usepackage{graphicx}
+
+%%%%%%%%%%%%%%
+% Title-page %
+%%%%%%%%%%%%%%
+
+\logo{./resources/png/mit_logo.png}
+\institute{Massachusetts Institute of Technology}
+\faculty{6.864 Advanced Natural Language Processing}
+\department{Professors Jacob Andres and Yoon Kim}
+\title{Homework One Report}
+%\subtitle{Homework One Report}
+\author{\textit{Author}\\Richard \textsc{Muri}}
+% \context{Well, I was bored...}
+\date{\today}
+
+%%%%%%%%%%%%%%%%
+% Bibliography %
+%%%%%%%%%%%%%%%%
+
+%\addbibresource{./resources/bib/references.bib}
+
+%%%%%%%%%%
+% Others %
+%%%%%%%%%%
+
+\lstdefinestyle{latex}{
+    language=TeX,
+    style=default,
+    %%%%%
+    commentstyle=\ForestGreen,
+    keywordstyle=\TrueBlue,
+    stringstyle=\VeronicaPurple,
+    emphstyle=\TrueBlue,
+    %%%%%
+    emph={LaTeX, usepackage, textit, textbf, textsc}
+}
+
+\FrameTBStyle{latex}
+
+\def\tbs{\textbackslash}
+
+%%%%%%%%%%%%
+% Document %
+%%%%%%%%%%%%
+
+\begin{document}
+    \maketitle
+    \romantableofcontents
+    %\section*{Acknowledgement}
+    \input{content.tex}
+
+    
+    
+    %\printbibliography
+
+
+\end{document}
