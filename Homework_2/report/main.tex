@@ -11,7 +11,8 @@
 \usepackage{packages/sleek-listings}
 \usepackage{packages/pythonhighlight}
 \usepackage{graphicx}
-
+\usepackage{bm}
+\usepackage{multirow}
 %%%%%%%%%%%%%%
 % Title-page %
 %%%%%%%%%%%%%%
@@ -20,7 +21,7 @@
 \institute{Massachusetts Institute of Technology}
 \faculty{6.864 Advanced Natural Language Processing}
 \department{Professors Jacob Andres and Yoon Kim}
-\title{Homework One Report}
+\title{Homework Two Report}
 %\subtitle{Homework One Report}
 \author{\textit{Author}\\Richard \textsc{Muri}}
 % \context{Well, I was bored...}
@@ -32,23 +33,6 @@
 
 %\addbibresource{./resources/bib/references.bib}
 
-%%%%%%%%%%
-% Others %
-%%%%%%%%%%
-
-\lstdefinestyle{latex}{
-    language=TeX,
-    style=default,
-    %%%%%
-    commentstyle=\ForestGreen,
-    keywordstyle=\TrueBlue,
-    stringstyle=\VeronicaPurple,
-    emphstyle=\TrueBlue,
-    %%%%%
-    emph={LaTeX, usepackage, textit, textbf, textsc}
-}
-
-\FrameTBStyle{latex}
 
 \def\tbs{\textbackslash}
 
@@ -57,14 +41,10 @@
 %%%%%%%%%%%%
 
 \begin{document}
-    \maketitle
-    % \romantableofcontents
-    %\section*{Acknowledgement}
-    \input{content.tex}
+\maketitle
+% \romantableofcontents
 
-    
-    
-    %\printbibliography
+\input{content.tex}
 
 
 \end{document}
