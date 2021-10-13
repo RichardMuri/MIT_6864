@@ -1,6 +1,8 @@
 \chapter*{Part One: Matrix Factorization}
 \addcontentsline{toc}{chapter}{Part One}
 
+Note: I collaborated with Vivienne Zhang and Justin Yao.
+
 The first part to code was the latent semantic analysis word representations. Latent semantic analysis uses singular value decomposition to represent words in a lower dimensional space than the number of documents in the corpus. In my case, I found that using the principle components matrix $\bm{U}$ alone provided significantly better results than weighting it with the diagonal matrix $\bm{\Sigma}$.
 
 \begin{python}
@@ -59,37 +61,72 @@ If $\bm{U}$ is negative, then $\bm{U \Sigma^2 U^T}$ is positive, resulting in fl
 
 The nearest neighbors in representation space appear better for some words than others. For instance, their is a clear connection between dog and all of its top related words. Words associated with "the" are seemingly random; given that "the" is a filler word, associations are likely largely meaningless.
 
-For this data set, using a smaller representation size and therefore a denser approximation of the term-document matrix appears to give slightly more meaningful associations.
+For this data set, using a smaller representation size and therefore a denser approximation of the term-document matrix appears to give slightly more meaningful associations. My LSA performance results match this assertion.
 
-\begin{tabular}{ |p{3cm}|p{3cm}|p{3cm}|p{3cm}|  }
-    \hline
-    \multicolumn{4}{|c|}{Word Similarities r = 100}                 \\
-    \hline
-    the             & dog            & 3           & good           \\
-    \hline
-    lid 1.753       & foods 0.571    & per 0.884   & pretty 1.255   \\
-    leaked 1.779    & pets 0.624     & 1 0.943     & bread 1.349    \\
-    filter 1.779    & switched 0.742 & 2 0.992     & prepare 1.376  \\
-    rest 1.786      & pet 0.794      & 4 1.061     & flaxseed 1.407 \\
-    flavoring 1.789 & cheap 0.831    & ounce 1.100 & beat 1.457     \\
-    \hline
-\end{tabular}
+\begin{center}
 
-\begin{tabular}{ |p{3cm}|p{3cm}|p{4cm}|p{3cm}|  }
-    \hline
-    \multicolumn{4}{|c|}{Word Similarities r = 500}                     \\
-    \hline
-    the           & dog            & 3                 & good           \\
-    \hline
-    suspect 1.953 & happier 1.670  & omega 1.733       & gerber 1.873   \\
-    flowers 1.961 & earlier 1.681  & vendor 1.739      & luck 1.885     \\
-    leaked 1.966  & eats 1.702     & supermarket 1.747 & crazy 1.890    \\
-    m 1.966       & stays 1.722    & nutty 1.755       & flaxseed 1.907 \\
-    burn 1.967    & standard 1.727 & carries 1.797     & suspect 1.907  \\
-    \hline
-\end{tabular}
+    \begin{tabular}{ |p{3cm}|p{3cm}|p{3cm}|p{3cm}|  }
+
+        \hline
+        \multicolumn{4}{|c|}{Word Similarities r = 100}                 \\
+        \hline
+        the             & dog            & 3           & good           \\
+        \hline
+        lid 1.753       & foods 0.571    & per 0.884   & pretty 1.255   \\
+        leaked 1.779    & pets 0.624     & 1 0.943     & bread 1.349    \\
+        filter 1.779    & switched 0.742 & 2 0.992     & prepare 1.376  \\
+        rest 1.786      & pet 0.794      & 4 1.061     & flaxseed 1.407 \\
+        flavoring 1.789 & cheap 0.831    & ounce 1.100 & beat 1.457     \\
+        \hline
+    \end{tabular}
+\end{center}
+
+\begin{center}
+    \begin{tabular}{ |p{3cm}|p{3cm}|p{4cm}|p{3cm}|  }
+        \hline
+        \multicolumn{4}{|c|}{Word Similarities r = 500}                     \\
+        \hline
+        the           & dog            & 3                 & good           \\
+        \hline
+        suspect 1.953 & happier 1.670  & omega 1.733       & gerber 1.873   \\
+        flowers 1.961 & earlier 1.681  & vendor 1.739      & luck 1.885     \\
+        leaked 1.966  & eats 1.702     & supermarket 1.747 & crazy 1.890    \\
+        m 1.966       & stays 1.722    & nutty 1.755       & flaxseed 1.907 \\
+        burn 1.967    & standard 1.727 & carries 1.797     & suspect 1.907  \\
+        \hline
+    \end{tabular}
+\end{center}
 
 \subsection*{Experimental Problem C}
+
+Learned representations clearly help with the downstream classification task. Figure \ref{fig:fig} shows a parameter sweep of my three featurizers across representation size and training size. For the word featurizer, once the training size is sufficient it mostly platueaus, with a slight dip in the middle.
+LSA featurizer performance drastically improves with a larger training size and a smaller representation space. The maximum values I obtained for each featurizer are as follows: LSA max: 0.812 Word max: 0.784 Combo max: 0.818.
+
+\begin{figure}[ht]
+    \begin{subfigure}{.5\textwidth}
+        \centering
+        % include first image
+        \includegraphics[width=.8\linewidth]{resources/png/word_perf.png}
+        \caption{Word Featurizer}
+        \label{fig:sub-first}
+    \end{subfigure}
+    \begin{subfigure}{.5\textwidth}
+        \centering
+        % include second image
+        \includegraphics[width=.8\linewidth]{resources/png/lsa_perf.png}
+        \caption{LSA Featurizer}
+        \label{fig:sub-second}
+    \end{subfigure}
+    \begin{subfigure}{.5\textwidth}
+        \centering
+        % include second image
+        \includegraphics[width=.8\linewidth]{resources/png/combo_perf.png}
+        \caption{Combo Featurizer}
+        \label{fig:sub-third}
+    \end{subfigure}
+    \caption{Featurizer Training and Representation size feature sweep}
+    \label{fig:fig}
+\end{figure}
 
 \chapter*{Part Two: Language Modeling}
 \addcontentsline{toc}{chapter}{Part Two}
@@ -104,21 +141,23 @@ I've observed some variance in my training. Somewhere a random number isn't seed
 
 The nearest neighbor space for Word2Vec is entirely unintuitive to me. The associated words for good seem reasonable, but every other example word seems somewhat random (particularly dog and barbecue). However Word2Vec appears to be my strongest featurizer, so perhaps the model is learning relationships that are not evident to me? In a production system I would worry it is cheating somehow and discovering idiosyncrasies hidden in my training set.
 
-\begin{tabular}{ |p{3cm}|p{3cm}|p{4cm}|p{3cm}|  }
-    \hline
-    \multicolumn{4}{|c|}{Word2Vec Word Similarities context  = 2}    \\
-    \hline
-    the         & dog             & 3                 & good         \\
-    \hline
-    lots 1.668  & companies 1.686 & sip 1.701         & nice 1.660   \\
-    fish 1.752  & double 1.707    & gingerbread 1.734 & sauces 1.697 \\
-    betty 1.771 & barbeque 1.713  & pets 1.7434       & pure 1.698   \\
-    alive 1.774 & times 1.717     & send 1.750        & great 1.704  \\
-    my 1.775    & leak 1.726      & bears 1.752       & photo 1.732  \\
-    \hline
-\end{tabular}
+\begin{center}
+    \begin{tabular}{ |p{3cm}|p{3cm}|p{4cm}|p{3cm}|  }
+        \hline
+        \multicolumn{4}{|c|}{Word2Vec Word Similarities context  = 2}    \\
+        \hline
+        the         & dog             & 3                 & good         \\
+        \hline
+        lots 1.668  & companies 1.686 & sip 1.701         & nice 1.660   \\
+        fish 1.752  & double 1.707    & gingerbread 1.734 & sauces 1.697 \\
+        betty 1.771 & barbeque 1.713  & pets 1.7434       & pure 1.698   \\
+        alive 1.774 & times 1.717     & send 1.750        & great 1.704  \\
+        my 1.775    & leak 1.726      & bears 1.752       & photo 1.732  \\
+        \hline
+    \end{tabular}
+\end{center}
 \subsection*{Experimental Problem B}
-Word2Vec is consistently about 2\% more accurate than any of my other featurizers.
+Word2Vec is consistently about 2\% more accurate than any of my other featurizers. The gains in performance over LSA are likely due to the fact that Word2Vec models context and has information about word ordering, which could be the difference between a positive and negative review.
 
 \subsection*{Experimental Problem 3}
 In terms of accuracy for my downstream task, two appears to be the magic number for my Word2Vec implementation. Using a context size of one tanks the model performance, and increasing it beyond two more gradually decreases performance.
@@ -127,17 +166,55 @@ Using a larger context size increases the distance from the center word that our
 
 
 
-% \begin{figure}[h]
-%     \centering
-%     \includegraphics[width=0.4\textwidth]{resources/png/no_bias_1e3.png}
-%     \noskipcaption{Perplexity of a vanilla RNN over 10 epochs with learning rate 1e-3}
-%     \label{firsttry}
-% \end{figure}
+
 
 
 
 \chapter*{Part Three: Improving the Model}
 \addcontentsline{toc}{chapter}{Part Three}
+
+For my model improvements, I took multiple approaches. I spent a while tuning hyperparameters and I also implemented alternative TF-IDF weighting schemes.
+
+Unfortunately there is some element of randomness to the training (somewhere a random call is not seeded), and I could not get perfectly deterministic results based on my hyperparameter tuning. For all models a higher training size correlated with better results.
+
+For Word2Vec, I discovered the best performing parameters were generally a context window size of two, a representation size of 500, and five epochs of training. Reducing the training was the most impactful hyperparameter, improving the model by ~1.5\%, implying that the default of ten epochs is probably overfitting the training data. It also makes sense that Word2Vec benefits from a higher dimensional representation than LSA, because Word2Vec has more information in the form of an ordered context window. In terms of overall featurizer performance, my best featurizer is a concatenation of the provided combo featurizer and Word2Vec, with a performance of ~0.82.
+
+For my LSA featurizer, I found the best performing parameter was to set the representation size to 100. A denser representation of the words (especially when context information is stripped and we're left purely with counts) results in a better fit on our regression. This implies there may be noise in our higher dimensional representations that a dense matrix eliminates.
+
+Finally I implemented three alternative weightings schemes for both TF and IDF taken from our lecture notes (Figure \ref{fig2}).
+
+\begin{figure}[ht]
+    \begin{subfigure}{.5\textwidth}
+        \centering
+        % include first image
+        \includegraphics[width=.8\linewidth]{resources/png/tf.png}
+        \caption{Word Featurizer}
+
+    \end{subfigure}
+    \begin{subfigure}{.5\textwidth}
+        \centering
+        % include second image
+        \includegraphics[width=.8\linewidth]{resources/png/idf.png}
+        \caption{LSA Featurizer}
+
+    \end{subfigure}
+    \caption{Alternative TF-IDF weighting schemes}
+    \label{fig2}
+\end{figure}
+
+My baseline LSA featurizer had a performance of 0.798. The table below shows a sweep of the different weighting schemes. Most of the weighting schemes failed to improve my results, with the exception being the term frequency combine with the probabilistic IDF, and the log norm combined with the smooth IDF. My best explanation for this is the first pair normalize document length, and perhaps longer reviews were given too much weight in the baseline. The second improved pair add a smoothing factor to account for sparseness in reviews, ensuring the TF-IDF matrix isn't mostly zeroes, and relatively boosting the importance of rare words. Perhaps some rarer but important words were below the noise threshold of the baseline.
+
+\begin{table}[]
+    \centering
+    \begin{tabular}{|l|c|c|c|l}
+        \cline{1-4}
+                       & IDF smooth & IDF max & \begin{tabular}[c]{@{}c@{}}probabilistic\\ IDF\end{tabular} & \\ \cline{1-4}
+        term frequency & 0.79       & 0.774   & 0.802                                                       & \\ \cline{1-4}
+        log norm       & 0.802      & 0.764   & 0.766                                                       & \\ \cline{1-4}
+        double norm    & 0.78       & 0.766   & 0.774                                                       & \\ \cline{1-4}
+    \end{tabular}
+\end{table}
+
 
 \chapter*{Part Four: Skip-Gram Variant}
 \addcontentsline{toc}{chapter}{Part Four}
@@ -182,11 +259,6 @@ Setting the derivative to $0$ we can rewrite $\partial \ell$ in the form
 \subsection*{Theoretical Problem C}
 Pointwise mutual information is the ratio of how often two events (in our case a word and its context) occur together versus how often they could be expected to occur if one assumes the events are independent. It is a useful index for showing quantitatively how strongly words are associated with each other.
 
-The critical points of the skip-gram local objective function are the same as the PMI formulation except scaled by a factor of $\log(1/k)$. $k$ is the number of negative samples introduced to each context. WHen $k=1$, the skip-gram model trains our embedding vectors towards exactly the PMI.
+The critical points of the skip-gram local objective function are the same as the PMI formulation except scaled by a factor of $\log(1/k)$ (or shifted by $log(k)$ if you pull the term outside the PMI). $k$ is the number of negative samples introduced to each context. When $k=1$, the skip-gram model trains our embedding vectors towards exactly the PMI.
 
-\chapter*{Appendix}
-\subsection*{Vanilla RNN}
-\begin{python}
-    import os
-\end{python}
 
