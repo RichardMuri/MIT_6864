@@ -1,0 +1,50 @@
+\documentclass[a4paper, 12pt]{report}
+
+%%%%%%%%%%%%
+% Packages %
+%%%%%%%%%%%%
+
+\usepackage[english]{babel}
+\usepackage[noheader]{packages/sleek}
+\usepackage{packages/sleek-title}
+\usepackage{packages/sleek-theorems}
+\usepackage{packages/sleek-listings}
+\usepackage{packages/pythonhighlight}
+\usepackage{graphicx}
+\usepackage{bm}
+\usepackage{multirow}
+%%%%%%%%%%%%%%
+% Title-page %
+%%%%%%%%%%%%%%
+
+\logo{./resources/png/mit_logo.png}
+\institute{Massachusetts Institute of Technology}
+\faculty{6.864 Advanced Natural Language Processing}
+\department{Professors Jacob Andres and Yoon Kim}
+\title{Homework Two Report}
+%\subtitle{Homework One Report}
+\author{\textit{Author}\\Richard \textsc{Muri}}
+% \context{Well, I was bored...}
+\date{\today}
+
+%%%%%%%%%%%%%%%%
+% Bibliography %
+%%%%%%%%%%%%%%%%
+
+%\addbibresource{./resources/bib/references.bib}
+
+
+\def\tbs{\textbackslash}
+
+%%%%%%%%%%%%
+% Document %
+%%%%%%%%%%%%
+
+\begin{document}
+\maketitle
+% \romantableofcontents
+
+\input{content.tex}
+
+
+\end{document}
